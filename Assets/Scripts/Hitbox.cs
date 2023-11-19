@@ -14,6 +14,7 @@ public class Hitbox : MonoBehaviour
         {
             //Debug.Log("enemy detected");
             enemyHealth.value = HealthManager.Instance.ChangeHealth(1, -10);
+    
         }
     }
 }
