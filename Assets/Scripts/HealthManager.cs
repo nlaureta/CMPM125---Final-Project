@@ -35,6 +35,10 @@ public class HealthManager : MonoBehaviour
         }
     }
 
+    void Start() {
+        
+    }
+
     void Update() {
         if(!roundEnded)
             CheckRoundEnd();
@@ -57,7 +61,16 @@ public class HealthManager : MonoBehaviour
         }
     }
 
+    public void setRoundEndFlag(){
+        roundEnded = true;
+        Debug.Log("called");
+    }
+
     public void ResetRoundEndFlag(){
         roundEnded = false;
+    }
+
+    public void FlagPrint() {
+        Debug.Log(roundEnded);
     }
 }
