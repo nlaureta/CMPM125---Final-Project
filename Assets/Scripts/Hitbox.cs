@@ -12,6 +12,7 @@ public class Hitbox : MonoBehaviour
         //Debug.Log("collision detected");
         if (other.tag == "Enemy")
         {
+
             //Debug.Log("enemy detected");
             enemyHealth.value = HealthManager.Instance.ChangeHealth(1, -10);
     
