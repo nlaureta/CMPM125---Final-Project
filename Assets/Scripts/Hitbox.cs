@@ -17,14 +17,10 @@ public class Hitbox : MonoBehaviour
         //Debug.Log("collision detected");
         if (other.tag == "Enemy")
         {
-<<<<<<< Updated upstream
-
-=======
             if (enemy.GetCurrentAnimatorStateInfo(0).IsName("Blocking"))
             {
                 dmgDealt = dmgDealt / 10;
             }
->>>>>>> Stashed changes
             //Debug.Log("enemy detected");
             enemyHealth.value = HealthManager.Instance.ChangeHealth(1, dmgDealt);
     
