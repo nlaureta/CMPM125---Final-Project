@@ -5,8 +5,8 @@ using UnityEngine;
 public class HealthManager : MonoBehaviour
 {
 
-    public int player1Health;
-    public int player2Health;
+    public float player1Health;
+    public float player2Health;
 
     public bool roundEnded = false;
 
@@ -14,8 +14,8 @@ public class HealthManager : MonoBehaviour
     public class Player 
     {
         public GameObject player;
-        public int maxHealth;
-        public int currHealth;
+        public float maxHealth;
+        public float currHealth;
     }
     public List<Player> players;
 
@@ -45,10 +45,10 @@ public class HealthManager : MonoBehaviour
     
     }
 
-    public float ChangeHealth(int playerNum, int amount)
+    public float ChangeHealth(int playerNum, float amount)
     {
         players[playerNum].currHealth += amount;
-        return ((float)players[playerNum].currHealth / (float)players[playerNum].maxHealth);
+        return (players[playerNum].currHealth / players[playerNum].maxHealth);
     }
 
     void CheckRoundEnd(){
