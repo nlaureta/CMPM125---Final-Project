@@ -4,7 +4,7 @@ using UnityEngine;
 public class PlayerMovement : MonoBehaviour
 {
     public float moveSpeed = 5f;  // Adjust this to set the movement speed
-    public float jumpForce = 10f; // Adjust this to set the jump force
+    public float jumpForce = 20f; // Adjust this to set the jump force
     public Transform enemy; // Drag and drop the enemy's transform in the Inspector
     private Rigidbody rb;
     private bool isGrounded = true; // Flag to check if the character is grounded
