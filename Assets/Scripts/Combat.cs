@@ -1,13 +1,48 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Scripting.APIUpdating;
+using UnityEngine.InputSystem;
 
 public class Combat : MonoBehaviour
 {
+    Player1Controls gamepadControls;
     public Animator punch;
     [SerializeField] private GameObject punchHB, blockIcon;
     bool punchcd, blocking = false;
     float timeRemaining;
+
+    Vector3 gamepadMove;
+    public float moveSpeed = 5f;
+
+    
+    void Awake() {
+        gamepadControls = new Player1Controls();
+        gamepadControls.Player1Gameplay.Punch.performed += ctx => GamepadPunch();
+        //gamepadControls.Player1Gameplay.Move.performed += ctx => gamepadMove = ctx.ReadValue<Vector2>();
+        //gamepadControls.Player1Gameplay.Move.canceled += ctx => gamepadMove = Vector2.zero;
+    }
+
+    void OnEnable() {
+        gamepadControls.Player1Gameplay.Enable();
+    }
+
+    void OnDisable() {
+        gamepadControls.Player1Gameplay.Disable();
+    }
+
+    void GamepadPunch() {
+        if (!punchcd && !blocking)
+        {
+            //Debug.Log("punching");
+            punchHB.SetActive(true);
+            punch.SetTrigger("punching");
+            //punch.Play("PlayerPunch", -1, 0f);
+            punchcd = true;
+            StartCoroutine(Cooldown(.5f));
+        }
+    }
+
 
     // Update is called once per frame
     void FixedUpdate()
@@ -27,6 +62,12 @@ public class Combat : MonoBehaviour
             blocking = true;
             blockIcon.SetActive(true);
             punch.SetBool("blocking", true);
+            //Debug.Log("Blocked");
+        } else if(!punchcd && gamepadControls.Player1Gameplay.Block.ReadValue<float>() > 0) {
+            blocking = true;
+            blockIcon.SetActive(true);
+            punch.SetBool("blocking", true);
+            //Debug.Log("Blocked");
         }
         else
         {
@@ -34,6 +75,16 @@ public class Combat : MonoBehaviour
             blockIcon.SetActive(false);
             punch.SetBool("blocking", false);
         }
+
+       
+        // else if (blocking && gamepadControls.Player1Gameplay.Block.ReadValue<float>() == 0)
+        // {
+        //     blocking = false;
+        //     blockIcon.SetActive(false);
+        //     punch.SetBool("blocking", false);
+        //     Debug.Log("Blocked ended");
+        // }
+
     }
 
     IEnumerator Cooldown(float cdtime)
