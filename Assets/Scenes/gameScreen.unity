@@ -11266,7 +11266,7 @@ GameObject:
   - component: {fileID: 2011041299}
   m_Layer: 0
   m_Name: Player
-  m_TagString: Player
+  m_TagString: Player 1
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -11418,6 +11418,7 @@ MonoBehaviour:
   punch: {fileID: 2011041300}
   punchHB: {fileID: 1559208088}
   blockIcon: {fileID: 1364055302}
+  moveSpeed: 5
 --- !u!95 &2011041300
 Animator:
   serializedVersion: 5
