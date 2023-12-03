@@ -6,9 +6,12 @@ using UnityEngine.UI;
 using TMPro;
 public class RoundManager : MonoBehaviour
 {
-    public int roundsToWin = 3;
+    public int roundsToWin = 2;
     private int player1Wins = 0;
     private int player2Wins = 0;
+    [SerializeField] private Slider enemyHealthbar;
+    [SerializeField] private Slider playerHealthBar;
+    [SerializeField] private GameObject gameOverScreen;
     
     public Toggle[] player1Toggles;
     public Toggle[] player2Toggles;
@@ -16,6 +19,8 @@ public class RoundManager : MonoBehaviour
     public GameObject player2WinText;
     public GameObject drawText;
     public Timer time;
+
+
  
     private static RoundManager _instance;
     public static RoundManager Instance { get { return _instance; } }
@@ -34,6 +39,8 @@ public class RoundManager : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        gameOverScreen.SetActive(false);
+        Debug.Log("player1Wins is now: " + player1Wins);
     }
 
     // Update is called once per frame
@@ -51,6 +58,7 @@ public class RoundManager : MonoBehaviour
                 if(player1Wins < 2)
                     player1Toggles[player1Wins].isOn = true;
                 player1WinText.SetActive(true);
+                //P1R1.color = Color.green;
                 player1Wins++;
             }
             else { 
@@ -82,10 +90,14 @@ public class RoundManager : MonoBehaviour
              //StartCoroutine(StartNewRound());
         }
         //HealthManager.Instance.FlagPrint();
-        if (player1Wins >= roundsToWin || player2Wins >= roundsToWin) { //determines who won best of 3
+        if (player1Wins == roundsToWin || player2Wins == roundsToWin) { //determines who won best of 3
                
-                Debug.Log("Game Over! Player " + (player1Wins >= roundsToWin ? 1 : 2) + " wins the game!");
-                // Game Over UI here
+            Debug.Log("Game Over! Player " + (player1Wins >= roundsToWin ? 1 : 2) + " wins the game!");
+            // Game Over UI here
+            gameOverScreen.SetActive(true);
+            Time.timeScale = 0f;
+
+                
 
                 //HealthManager.Instance.FlagPrint();
                 //StartNewRound();
@@ -95,6 +107,7 @@ public class RoundManager : MonoBehaviour
             //StartNewRound();
             //Debug.Log("Test");
             StartCoroutine(StartNewRound());
+            Debug.Log("player1Wins is now: " + player1Wins);
         }
        
     }
@@ -106,6 +119,8 @@ public class RoundManager : MonoBehaviour
        player1WinText.SetActive(false);
        player2WinText.SetActive(false);
        drawText.SetActive(false);
+       enemyHealthbar.value = 1;
+       playerHealthBar.value = 1;
        GameObject.FindGameObjectWithTag("Player").transform.position = new Vector3(-4.59989977f,-1.95000005f,0.0179928206f);
        GameObject.FindGameObjectWithTag("Enemy").transform.position = new Vector3(6.07310009f,-1.95000005f,0.0179928206f);
        GameObject.FindGameObjectWithTag("Player").transform.localRotation = new Quaternion(0, 0, 0, 0);
