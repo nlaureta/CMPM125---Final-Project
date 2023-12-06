@@ -17,6 +17,10 @@ public class PlayerMovement : MonoBehaviour
     private int playerIndex = 0;
     private Vector2 inputVector = Vector2.zero;
 
+    bool moveLeft = false;
+    bool moveRight = false;
+    bool keyboardJumpButton = false;
+
     void Awake()
     {
         gamepadControls = new Player1Controls();
@@ -25,7 +29,8 @@ public class PlayerMovement : MonoBehaviour
         gamepadControls.Player1Gameplay.Move.performed += ctx => gamepadJump();
     }
 
-    public int GetPlayerIndex() {
+    public int GetPlayerIndex()
+    {
         return playerIndex;
     }
 
@@ -50,16 +55,30 @@ public class PlayerMovement : MonoBehaviour
 
     void Update()
     {
-        // Get input from the player
-        bool moveLeft = Input.GetKey(KeyCode.A);
-        bool moveRight = Input.GetKey(KeyCode.D);
-
         // Update the character's position
         float horizontalInput = 0f;
         //Debug.Log(inputVector.x);
-        if(inputVector.x > 0.1f || inputVector.x < 0f){
+        if (inputVector.x > 0.1f || inputVector.x < 0f)
+        {
             horizontalInput = inputVector.x;
-        }else{
+        }
+        else
+        {
+            if (playerIndex == 0)
+            {
+                // Get input from the player
+                moveLeft = Input.GetKey(KeyCode.A);
+                moveRight = Input.GetKey(KeyCode.D);
+                keyboardJumpButton = Input.GetKey(KeyCode.W);
+
+            }
+            else if (playerIndex == 1)
+            {
+                // Get input from the player
+                moveLeft = Input.GetKey(KeyCode.LeftArrow);
+                moveRight = Input.GetKey(KeyCode.RightArrow);
+                keyboardJumpButton = Input.GetKey(KeyCode.UpArrow);
+            }
 
             if (moveLeft)
             {
@@ -69,6 +88,14 @@ public class PlayerMovement : MonoBehaviour
             {
                 horizontalInput = 1f;
             }
+
+            // Jumping with the "W or Up Arrow" key
+            if (keyboardJumpButton && isGrounded)
+            {
+                rb.AddForce(Vector3.up * jumpForce, ForceMode.Impulse);
+                isGrounded = false;
+            }
+
         }
 
         Vector3 movement = new Vector3(horizontalInput, 0f, 0f);
@@ -99,12 +126,7 @@ public class PlayerMovement : MonoBehaviour
             transform.rotation = Quaternion.RotateTowards(transform.rotation, targetRotation, Time.deltaTime * 1000f);
         }
 
-        // Jumping with the "W" key
-        if (Input.GetKeyDown(KeyCode.W) && isGrounded)
-        {
-            rb.AddForce(Vector3.up * jumpForce, ForceMode.Impulse);
-            isGrounded = false;
-        }
+
     }
 
 

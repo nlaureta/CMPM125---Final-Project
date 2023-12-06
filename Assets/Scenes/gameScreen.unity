@@ -1652,7 +1652,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   moveSpeed: 5
   jumpForce: 7
-  enemy: {fileID: 0}
+  enemy: {fileID: 2011041295}
   playerIndex: 1
 --- !u!1 &470012495
 GameObject:
@@ -11445,7 +11445,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   moveSpeed: 5
   jumpForce: 7
-  enemy: {fileID: 0}
+  enemy: {fileID: 435432727}
   playerIndex: 0
 --- !u!54 &2011041297
 Rigidbody:
