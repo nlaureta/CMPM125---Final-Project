@@ -20,8 +20,8 @@ public class PlayerMovement : MonoBehaviour
     void Awake()
     {
         gamepadControls = new Player1Controls();
-        gamepadControls.Player1Gameplay.Move.performed += ctx => gamepadMove = ctx.ReadValue<Vector2>();
-        gamepadControls.Player1Gameplay.Move.canceled += ctx => gamepadMove = Vector2.zero;
+        //gamepadControls.Player1Gameplay.Move.performed += ctx => gamepadMove = ctx.ReadValue<Vector2>();
+        //gamepadControls.Player1Gameplay.Move.canceled += ctx => gamepadMove = Vector2.zero;
         gamepadControls.Player1Gameplay.Move.performed += ctx => gamepadJump();
     }
 
@@ -29,7 +29,7 @@ public class PlayerMovement : MonoBehaviour
         return playerIndex;
     }
 
-     public void SetInputVector(Vector2 direction)
+    public void SetInputVector(Vector2 direction)
     {
         inputVector = direction;
     }
@@ -39,9 +39,9 @@ public class PlayerMovement : MonoBehaviour
         rb = GetComponent<Rigidbody>();
     }
 
-    void gamepadJump()
+    public void gamepadJump()
     {
-        if (gamepadMove.y > 0.5f && isGrounded)
+        if (inputVector.y > 0.5f && isGrounded)
         {
             rb.AddForce(Vector3.up * jumpForce, ForceMode.Impulse);
             isGrounded = false;
@@ -56,7 +56,8 @@ public class PlayerMovement : MonoBehaviour
 
         // Update the character's position
         float horizontalInput = 0f;
-        if(gamepadMove.x > 0.1f || gamepadMove.x < 0f){
+        //Debug.Log(inputVector.x);
+        if(inputVector.x > 0.1f || inputVector.x < 0f){
             horizontalInput = inputVector.x;
         }else{
 

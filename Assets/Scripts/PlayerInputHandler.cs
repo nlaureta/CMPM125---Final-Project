@@ -23,4 +23,10 @@ public class PlayerInputHandler : MonoBehaviour
             mover.SetInputVector(context.ReadValue<Vector2>());
     }
 
+    public void OnJump(CallbackContext context)
+    {
+       // Debug.Log(value);
+       mover.gamepadJump();
+    }
+
 }

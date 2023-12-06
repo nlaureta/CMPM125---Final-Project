@@ -1,5 +1,5 @@
 {
-    "name": "Player1Controls",
+    "name": "PlayerController",
     "maps": [
         {
             "name": "Player1Gameplay",
