@@ -13,6 +13,9 @@ public class PlayerMovement : MonoBehaviour
     private Rigidbody rb;
     private bool isGrounded = true;
     Vector2 gamepadMove;
+    [SerializeField]
+    private int playerIndex = 0;
+    private Vector2 inputVector = Vector2.zero;
 
     void Awake()
     {
@@ -20,6 +23,15 @@ public class PlayerMovement : MonoBehaviour
         gamepadControls.Player1Gameplay.Move.performed += ctx => gamepadMove = ctx.ReadValue<Vector2>();
         gamepadControls.Player1Gameplay.Move.canceled += ctx => gamepadMove = Vector2.zero;
         gamepadControls.Player1Gameplay.Move.performed += ctx => gamepadJump();
+    }
+
+    public int GetPlayerIndex() {
+        return playerIndex;
+    }
+
+     public void SetInputVector(Vector2 direction)
+    {
+        inputVector = direction;
     }
 
     void Start()
@@ -44,14 +56,18 @@ public class PlayerMovement : MonoBehaviour
 
         // Update the character's position
         float horizontalInput = 0f;
+        if(gamepadMove.x > 0.1f || gamepadMove.x < 0f){
+            horizontalInput = inputVector.x;
+        }else{
 
-        if (moveLeft)
-        {
-            horizontalInput = -1f;
-        }
-        else if (moveRight)
-        {
-            horizontalInput = 1f;
+            if (moveLeft)
+            {
+                horizontalInput = -1f;
+            }
+            else if (moveRight)
+            {
+                horizontalInput = 1f;
+            }
         }
 
         Vector3 movement = new Vector3(horizontalInput, 0f, 0f);
