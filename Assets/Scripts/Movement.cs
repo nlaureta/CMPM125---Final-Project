@@ -44,7 +44,7 @@ public class PlayerMovement : MonoBehaviour
 
     public void SetInputVector(Vector2 direction)
     {
-        //anims.SetBool("Moves", true);
+        anims.SetBool("Moves", true);
         inputVector = direction;
     }
 
