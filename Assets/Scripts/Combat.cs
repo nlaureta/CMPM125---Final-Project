@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Scripting.APIUpdating;
 using UnityEngine.InputSystem;
+using Unity.VisualScripting;
 
 public class Combat : MonoBehaviour
 {
@@ -10,6 +11,8 @@ public class Combat : MonoBehaviour
     Animator punch;
     //[SerializeField] private GameObject punchHB, blockIcon;
     bool punchcd, blocking = false;
+    private bool whichPlayerAttack = false;
+    private bool whichPlayerBlock = false;
     float timeRemaining;
 
     Vector3 gamepadMove;
@@ -20,8 +23,9 @@ public class Combat : MonoBehaviour
 
     private bool isButtonPressed = false;
 
-    
-    void Awake() {
+
+    void Awake()
+    {
         punch = GetComponentInChildren<Animator>();
         gamepadControls = new Player1Controls();
         //gamepadControls.Player1Gameplay.Punch.performed += ctx => GamepadPunch();
@@ -29,11 +33,13 @@ public class Combat : MonoBehaviour
         //gamepadControls.Player1Gameplay.Move.canceled += ctx => gamepadMove = Vector2.zero;
     }
 
-    void OnEnable() {
+    void OnEnable()
+    {
         gamepadControls.Player1Gameplay.Enable();
     }
 
-    void OnDisable() {
+    void OnDisable()
+    {
         gamepadControls.Player1Gameplay.Disable();
     }
 
@@ -42,7 +48,8 @@ public class Combat : MonoBehaviour
         return playerIndex;
     }
 
-    public void GamepadPunch() {
+    public void GamepadPunch()
+    {
         if (!punchcd && !blocking)
         {
             //Debug.Log("punching");
@@ -54,7 +61,8 @@ public class Combat : MonoBehaviour
         }
     }
 
-    public void SetBlock(bool buttonPressed) {
+    public void SetBlock(bool buttonPressed) // gamepad bool for block
+    {
         isButtonPressed = buttonPressed;
     }
 
@@ -62,7 +70,17 @@ public class Combat : MonoBehaviour
     // Update is called once per frame
     void FixedUpdate()
     {
-        if (!punchcd && !blocking && Input.GetKey(KeyCode.U))
+        if (playerIndex == 0) //p1
+        {
+            whichPlayerAttack = Input.GetKey(KeyCode.U);
+            whichPlayerBlock = Input.GetKey(KeyCode.I);
+        }
+        else if (playerIndex == 1) //p2
+        {
+            whichPlayerAttack = Input.GetKey(KeyCode.Mouse0);
+            whichPlayerBlock = Input.GetKey(KeyCode.Mouse1);
+        }
+        if (!punchcd && !blocking && whichPlayerAttack)
         {
             //Debug.Log("punching");
             //punchHB.SetActive(true);
@@ -72,13 +90,15 @@ public class Combat : MonoBehaviour
             StartCoroutine(Cooldown(.5f));
         }
 
-        if (!punchcd && Input.GetKey(KeyCode.I))
+        if (!punchcd && whichPlayerBlock)
         {
             blocking = true;
             //blockIcon.SetActive(true);
             punch.SetBool("Block", true);
             //Debug.Log("Blocked");
-         } else if(!punchcd && isButtonPressed) {
+        }
+        else if (!punchcd && isButtonPressed) //gamepad block
+        {
             blocking = true;
             //blockIcon.SetActive(true);
             punch.SetBool("Block", true);
@@ -91,7 +111,7 @@ public class Combat : MonoBehaviour
             punch.SetBool("Block", false);
         }
 
-       
+
         // else if (blocking && gamepadControls.Player1Gameplay.Block.ReadValue<float>() == 0)
         // {
         //     blocking = false;
