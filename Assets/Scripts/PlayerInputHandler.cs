@@ -37,9 +37,9 @@ public class PlayerInputHandler : MonoBehaviour
        combat.GamepadPunch();
     }
 
-    // public void OnBlock(CallbackContext context)
-    // {
-    //    combat.GamepadBlock();
-    // }
+    public void OnBlock(CallbackContext context)
+    {
+       combat.SetBlock(context.ReadValueAsButton());
+    }
 
 }

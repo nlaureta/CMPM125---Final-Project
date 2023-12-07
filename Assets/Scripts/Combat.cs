@@ -6,7 +6,7 @@ using UnityEngine.InputSystem;
 
 public class Combat : MonoBehaviour
 {
-    Player1Controls gamepadControls;
+    public Player1Controls gamepadControls;
     Animator punch;
     //[SerializeField] private GameObject punchHB, blockIcon;
     bool punchcd, blocking = false;
@@ -17,6 +17,8 @@ public class Combat : MonoBehaviour
 
     [SerializeField]
     private int playerIndex = 0; //determines what player is controlled
+
+    private bool isButtonPressed = false;
 
     
     void Awake() {
@@ -52,19 +54,9 @@ public class Combat : MonoBehaviour
         }
     }
 
-    // public void GamepadBlock() {
-    //     if(!punchcd && gamepadControls.Player1Gameplay.Block.ReadValue<float>() > 0) {
-    //         blocking = true;
-    //         //blockIcon.SetActive(true);
-    //         punch.SetBool("Block", true);
-    //         //Debug.Log("Blocked");
-    //     }else
-    //     {
-    //         blocking = false;
-    //         //blockIcon.SetActive(false);
-    //         punch.SetBool("Block", false);
-    //     }
-    // }
+    public void SetBlock(bool buttonPressed) {
+        isButtonPressed = buttonPressed;
+    }
 
 
     // Update is called once per frame
@@ -86,7 +78,7 @@ public class Combat : MonoBehaviour
             //blockIcon.SetActive(true);
             punch.SetBool("Block", true);
             //Debug.Log("Blocked");
-         } else if(!punchcd && gamepadControls.Player1Gameplay.Block.ReadValue<float>() > 0) {
+         } else if(!punchcd && isButtonPressed) {
             blocking = true;
             //blockIcon.SetActive(true);
             punch.SetBool("Block", true);
