@@ -6,6 +6,8 @@ using UnityEngine.SceneManagement;
 public class sceneManager : MonoBehaviour
 {
     public static sceneManager Instance;
+    private Animator cameraAnim;
+    private GameObject mainUI;
     private void Awake()
     {
         if (Instance != null)
@@ -28,10 +30,21 @@ public class sceneManager : MonoBehaviour
     public void LoadMainMenu()
     {
         SceneManager.LoadScene(Scene.mainMenu.ToString());
+        
     }
 
     public void LoadGameScreen()
     {
+        mainUI = GameObject.Find("Canvas");
+        cameraAnim = GameObject.Find("Main Camera").GetComponent<Animator>();
+        mainUI.SetActive(false);
+        StartCoroutine(PlayAnim());
+    }
+
+    IEnumerator PlayAnim()
+    {
+        cameraAnim.Play("New Animation");
+        yield return new WaitForSeconds(1.5f);
         SceneManager.LoadScene(Scene.gameScreen.ToString());
     }
 }
