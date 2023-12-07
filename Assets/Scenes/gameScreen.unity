@@ -815,7 +815,7 @@ GameObject:
   - component: {fileID: 328029756}
   m_Layer: 0
   m_Name: PunchHB
-  m_TagString: Untagged
+  m_TagString: Player 1
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -7297,13 +7297,21 @@ MonoBehaviour:
   m_JoinAction:
     m_UseReference: 0
     m_Action:
-      m_Name: 
+      m_Name: Join
       m_Type: 0
       m_ExpectedControlType: 
       m_Id: d112bfd1-aeb7-4a7c-8fec-4ec9cfd4292b
       m_Processors: 
       m_Interactions: 
-      m_SingletonActionBindings: []
+      m_SingletonActionBindings:
+      - m_Name: 
+        m_Id: 82856e75-af05-4616-8e3c-6d6ff108b7e5
+        m_Path: <Gamepad>/buttonSouth
+        m_Interactions: 
+        m_Processors: 
+        m_Groups: 
+        m_Action: Join
+        m_Flags: 0
       m_Flags: 0
     m_Reference: {fileID: 0}
   m_PlayerPrefab: {fileID: 3368025267178886470, guid: ec64776f496b3d449a9d50b2222d1772, type: 3}

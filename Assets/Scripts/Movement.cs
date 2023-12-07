@@ -43,6 +43,7 @@ public class PlayerMovement : MonoBehaviour
 
     public void SetInputVector(Vector2 direction)
     {
+        //anims.SetBool("Moves", true);
         inputVector = direction;
     }
 
@@ -55,6 +56,7 @@ public class PlayerMovement : MonoBehaviour
     {
         if (inputVector.y > 0.5f && isGrounded)
         {
+            anims.SetTrigger("Jump");
             rb.AddForce(Vector3.up * jumpForce, ForceMode.Impulse);
             isGrounded = false;
         }

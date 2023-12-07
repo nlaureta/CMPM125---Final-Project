@@ -10,7 +10,7 @@ public class BloodParticles : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        if ( other.gameObject.CompareTag("Player"))
+        if ( other.gameObject.CompareTag("Player 1"))
         {
             var emit = Blood.emission;
 
