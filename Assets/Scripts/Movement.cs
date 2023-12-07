@@ -21,12 +21,19 @@ public class PlayerMovement : MonoBehaviour
     bool moveRight = false;
     bool keyboardJumpButton = false;
 
+    Animator anims;
+    private bool isBlocking = false;
+    private float baseSpeed, blockSpeed;
+
     void Awake()
     {
         gamepadControls = new Player1Controls();
         //gamepadControls.Player1Gameplay.Move.performed += ctx => gamepadMove = ctx.ReadValue<Vector2>();
         //gamepadControls.Player1Gameplay.Move.canceled += ctx => gamepadMove = Vector2.zero;
         gamepadControls.Player1Gameplay.Move.performed += ctx => gamepadJump();
+        anims = GetComponentInChildren<Animator>();
+        baseSpeed = moveSpeed;
+        blockSpeed = moveSpeed / 3;
     }
 
     public int GetPlayerIndex()
@@ -53,10 +60,19 @@ public class PlayerMovement : MonoBehaviour
         }
     }
 
-    void Update()
+    void FixedUpdate()
     {
         // Update the character's position
         float horizontalInput = 0f;
+        isBlocking = anims.GetBool("Block");
+        if (isBlocking)
+        {
+            moveSpeed = blockSpeed;
+        }
+        else
+        {
+            moveSpeed = baseSpeed;
+        }
         //Debug.Log(inputVector.x);
         if (inputVector.x > 0.1f || inputVector.x < 0f)
         {
@@ -64,6 +80,7 @@ public class PlayerMovement : MonoBehaviour
         }
         else
         {
+            anims.SetBool("Moves", false);
             if (playerIndex == 0)
             {
                 // Get input from the player
@@ -82,16 +99,19 @@ public class PlayerMovement : MonoBehaviour
 
             if (moveLeft)
             {
+                anims.SetBool("Moves", true);
                 horizontalInput = -1f;
             }
             else if (moveRight)
             {
+                anims.SetBool("Moves", true);
                 horizontalInput = 1f;
             }
 
             // Jumping with the "W or Up Arrow" key
-            if (keyboardJumpButton && isGrounded)
+            if (keyboardJumpButton && isGrounded && !isBlocking)
             {
+                anims.SetTrigger("Jump");
                 rb.AddForce(Vector3.up * jumpForce, ForceMode.Impulse);
                 isGrounded = false;
             }

@@ -7,8 +7,8 @@ using UnityEngine.InputSystem;
 public class Combat : MonoBehaviour
 {
     Player1Controls gamepadControls;
-    public Animator punch;
-    [SerializeField] private GameObject punchHB, blockIcon;
+    Animator punch;
+    //[SerializeField] private GameObject punchHB, blockIcon;
     bool punchcd, blocking = false;
     float timeRemaining;
 
@@ -17,6 +17,7 @@ public class Combat : MonoBehaviour
 
     
     void Awake() {
+        punch = GetComponentInChildren<Animator>();
         gamepadControls = new Player1Controls();
         gamepadControls.Player1Gameplay.Punch.performed += ctx => GamepadPunch();
         //gamepadControls.Player1Gameplay.Move.performed += ctx => gamepadMove = ctx.ReadValue<Vector2>();
@@ -35,8 +36,8 @@ public class Combat : MonoBehaviour
         if (!punchcd && !blocking)
         {
             //Debug.Log("punching");
-            punchHB.SetActive(true);
-            punch.SetTrigger("punching");
+            //punchHB.SetActive(true);
+            punch.SetTrigger("Punch");
             //punch.Play("PlayerPunch", -1, 0f);
             punchcd = true;
             StartCoroutine(Cooldown(.5f));
@@ -50,8 +51,8 @@ public class Combat : MonoBehaviour
         if (!punchcd && !blocking && Input.GetKey(KeyCode.U))
         {
             //Debug.Log("punching");
-            punchHB.SetActive(true);
-            punch.SetTrigger("punching");
+            //punchHB.SetActive(true);
+            punch.SetTrigger("Punch");
             //punch.Play("PlayerPunch", -1, 0f);
             punchcd = true;
             StartCoroutine(Cooldown(.5f));
@@ -60,20 +61,20 @@ public class Combat : MonoBehaviour
         if (!punchcd && Input.GetKey(KeyCode.I))
         {
             blocking = true;
-            blockIcon.SetActive(true);
-            punch.SetBool("blocking", true);
+            //blockIcon.SetActive(true);
+            punch.SetBool("Block", true);
             //Debug.Log("Blocked");
         } else if(!punchcd && gamepadControls.Player1Gameplay.Block.ReadValue<float>() > 0) {
             blocking = true;
-            blockIcon.SetActive(true);
-            punch.SetBool("blocking", true);
+            //blockIcon.SetActive(true);
+            punch.SetBool("Block", true);
             //Debug.Log("Blocked");
         }
         else
         {
             blocking = false;
-            blockIcon.SetActive(false);
-            punch.SetBool("blocking", false);
+            //blockIcon.SetActive(false);
+            punch.SetBool("Block", false);
         }
 
        
@@ -97,6 +98,6 @@ public class Combat : MonoBehaviour
             yield return null;
         }
         punchcd = false;
-        punchHB.SetActive(false);
+        //punchHB.SetActive(false);
     }
 }

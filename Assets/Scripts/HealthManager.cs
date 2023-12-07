@@ -48,7 +48,15 @@ public class HealthManager : MonoBehaviour
     public float ChangeHealth(int playerNum, float amount)
     {
         players[playerNum].currHealth += amount;
+        players[playerNum].player.transform.rotation = Quaternion.Euler(0f, 0f, -45f);
+        StartCoroutine(Recover(playerNum));
         return (players[playerNum].currHealth / players[playerNum].maxHealth);
+    }
+
+    public IEnumerator Recover(int playerNum)
+    {
+        yield return new WaitForSeconds(1);
+        players[playerNum].player.transform.rotation = Quaternion.Euler(0f, 0f, 0f);
     }
 
     void CheckRoundEnd(){
