@@ -15,11 +15,14 @@ public class Combat : MonoBehaviour
     Vector3 gamepadMove;
     public float moveSpeed = 5f;
 
+    [SerializeField]
+    private int playerIndex = 0; //determines what player is controlled
+
     
     void Awake() {
         punch = GetComponentInChildren<Animator>();
         gamepadControls = new Player1Controls();
-        gamepadControls.Player1Gameplay.Punch.performed += ctx => GamepadPunch();
+        //gamepadControls.Player1Gameplay.Punch.performed += ctx => GamepadPunch();
         //gamepadControls.Player1Gameplay.Move.performed += ctx => gamepadMove = ctx.ReadValue<Vector2>();
         //gamepadControls.Player1Gameplay.Move.canceled += ctx => gamepadMove = Vector2.zero;
     }
@@ -32,7 +35,12 @@ public class Combat : MonoBehaviour
         gamepadControls.Player1Gameplay.Disable();
     }
 
-    void GamepadPunch() {
+    public int GetPlayerIndex()
+    {
+        return playerIndex;
+    }
+
+    public void GamepadPunch() {
         if (!punchcd && !blocking)
         {
             //Debug.Log("punching");
@@ -43,6 +51,20 @@ public class Combat : MonoBehaviour
             StartCoroutine(Cooldown(.5f));
         }
     }
+
+    // public void GamepadBlock() {
+    //     if(!punchcd && gamepadControls.Player1Gameplay.Block.ReadValue<float>() > 0) {
+    //         blocking = true;
+    //         //blockIcon.SetActive(true);
+    //         punch.SetBool("Block", true);
+    //         //Debug.Log("Blocked");
+    //     }else
+    //     {
+    //         blocking = false;
+    //         //blockIcon.SetActive(false);
+    //         punch.SetBool("Block", false);
+    //     }
+    // }
 
 
     // Update is called once per frame
@@ -64,7 +86,7 @@ public class Combat : MonoBehaviour
             //blockIcon.SetActive(true);
             punch.SetBool("Block", true);
             //Debug.Log("Blocked");
-        } else if(!punchcd && gamepadControls.Player1Gameplay.Block.ReadValue<float>() > 0) {
+         } else if(!punchcd && gamepadControls.Player1Gameplay.Block.ReadValue<float>() > 0) {
             blocking = true;
             //blockIcon.SetActive(true);
             punch.SetBool("Block", true);
