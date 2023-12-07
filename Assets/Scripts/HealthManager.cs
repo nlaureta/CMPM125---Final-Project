@@ -57,7 +57,8 @@ public class HealthManager : MonoBehaviour
         players[playerNum].currHealth += amount;
         players[playerNum].takingDmg = true;
         players[playerNum].enemy.SetBool("Hit", true);
-        //players[playerNum].player.transform.rotation = Quaternion.Euler(0f, 0f, -45f);
+        players[playerNum].enemy.SetBool("Knocked", true);
+        players[playerNum].player.transform.rotation *= Quaternion.Euler(0f, 0f, 45f);
         StopCoroutine(Recover(playerNum, recoveryTime));
         dmg = StartCoroutine(Recover(playerNum, recoveryTime));
         return (players[playerNum].currHealth / players[playerNum].maxHealth);
@@ -99,6 +100,7 @@ public class HealthManager : MonoBehaviour
             yield return null;
         }
         players[playerNum].enemy.SetBool("Recovering", false);
+        players[playerNum].enemy.SetBool("Knocked", false);
         //players[playerNum].enemy.SetTrigger("Recovered");
         //players[playerNum].player.transform.rotation = Quaternion.Euler(0f, 0f, 0f);
     }

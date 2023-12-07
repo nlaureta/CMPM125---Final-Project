@@ -24,6 +24,7 @@ public class PlayerMovement : MonoBehaviour
     Animator anims;
     private bool isBlocking = false;
     private float baseSpeed, blockSpeed;
+    private bool knockedBack = false;
 
     void Awake()
     {
@@ -67,6 +68,7 @@ public class PlayerMovement : MonoBehaviour
         // Update the character's position
         float horizontalInput = 0f;
         isBlocking = anims.GetBool("Block");
+        knockedBack = anims.GetBool("Knocked");
         if (isBlocking)
         {
             moveSpeed = blockSpeed;
@@ -125,7 +127,7 @@ public class PlayerMovement : MonoBehaviour
 
 
         // Face the enemy
-        if (enemy != null)
+        if (enemy != null && !knockedBack)
         {
             // Calculate the target position relative to the player
             Vector3 relativeEnemyPosition = enemy.position - transform.position;
