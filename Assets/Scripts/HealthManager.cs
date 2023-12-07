@@ -89,7 +89,6 @@ public class HealthManager : MonoBehaviour
             //    players[playerNum].takingDmg = false;
             //}
         }
-        Debug.Log("huh");
         players[playerNum].enemy.SetBool("Hit", false);
         players[playerNum].enemy.SetBool("Recovering", true);
         //yield return new WaitForSeconds(1);
