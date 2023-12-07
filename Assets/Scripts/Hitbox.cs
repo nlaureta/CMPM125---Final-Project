@@ -19,6 +19,7 @@ public class Hitbox : MonoBehaviour
         enemy = other.gameObject.GetComponentInChildren<Animator>();
         dmgDealt = dmg;
         //Debug.Log("collision detected");
+        Debug.Log("Approaching If Statement");
         if (other.tag == enemyTag && !enemy.GetBool("Recovering"))
         {
             hpAnimator.SetTrigger("hit");
@@ -30,5 +31,6 @@ public class Hitbox : MonoBehaviour
             enemyHealth.value = HealthManager.Instance.ChangeHealth(enemyIndex, dmgDealt, recovery);
 
         }
+  
     }
 }
