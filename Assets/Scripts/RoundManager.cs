@@ -20,6 +20,8 @@ public class RoundManager : MonoBehaviour
     public GameObject drawText;
     public Timer time;
 
+    [SerializeField] private GameObject p1, p2;
+
 
 
     private static RoundManager _instance;
@@ -138,10 +140,14 @@ public class RoundManager : MonoBehaviour
         enemyHealthbar.value = 1;
         playerHealthBar.value = 1;
         //reset player positions
-        GameObject.FindGameObjectWithTag("Player 1").transform.position = new Vector3(-4.59989977f, -1.95000005f, 0.0179928206f);
-        GameObject.FindGameObjectWithTag("Enemy").transform.position = new Vector3(6.07310009f, -1.95000005f, 0.0179928206f);
-        GameObject.FindGameObjectWithTag("Player 1").transform.localRotation = new Quaternion(0, 0, 0, 0);
-        GameObject.FindGameObjectWithTag("Enemy").transform.localRotation = new Quaternion(0, 0, 0, 0);
+        //GameObject.FindGameObjectWithTag("Player 1").transform.position = new Vector3(-4.59989977f, -1.95000005f, 0.0179928206f);
+        //GameObject.FindGameObjectWithTag("Enemy").transform.position = new Vector3(6.07310009f, -1.95000005f, 0.0179928206f);
+        //GameObject.FindGameObjectWithTag("Player 1").transform.localRotation = new Quaternion(0, 0, 0, 0);
+        //GameObject.FindGameObjectWithTag("Enemy").transform.localRotation = new Quaternion(0, 0, 0, 0);
+        p1.transform.position = new Vector3(-6f, -1.25f, 0f);
+        p2.transform.position = new Vector3(6f, -1.25f, 0f);
+        p1.transform.localRotation = new Quaternion(0f, 0f, 0f, 0f);
+        p2.transform.localRotation = new Quaternion(0f, 180f, 0f, 0f);
         //reset player health value
         HealthManager.Instance.players[0].currHealth = 100;
         HealthManager.Instance.players[1].currHealth = 100;

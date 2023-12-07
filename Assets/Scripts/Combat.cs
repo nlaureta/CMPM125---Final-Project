@@ -18,8 +18,7 @@ public class Combat : MonoBehaviour
     Vector3 gamepadMove;
     public float moveSpeed = 5f;
 
-    [SerializeField]
-    private int playerIndex = 0; //determines what player is controlled
+    [SerializeField] private int playerIndex = 0; //determines what player is controlled
 
     private bool isButtonPressed = false;
 

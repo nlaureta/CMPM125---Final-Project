@@ -8,6 +8,10 @@ public class HealthManager : MonoBehaviour
     public float player1Health;
     public float player2Health;
 
+    private float lastHealthValue;
+    private bool takingDmg = false;
+    private float timeRemaining;
+
     public bool roundEnded = false;
 
     [System.Serializable]
@@ -16,6 +20,7 @@ public class HealthManager : MonoBehaviour
         public GameObject player;
         public float maxHealth;
         public float currHealth;
+        public Animator enemy;
     }
     public List<Player> players;
 
@@ -48,15 +53,39 @@ public class HealthManager : MonoBehaviour
     public float ChangeHealth(int playerNum, float amount)
     {
         players[playerNum].currHealth += amount;
-        players[playerNum].player.transform.rotation = Quaternion.Euler(0f, 0f, -45f);
+        takingDmg = true;
+        players[playerNum].enemy.SetBool("Hit", true);
+        //players[playerNum].player.transform.rotation = Quaternion.Euler(0f, 0f, -45f);
         StartCoroutine(Recover(playerNum));
         return (players[playerNum].currHealth / players[playerNum].maxHealth);
     }
 
     public IEnumerator Recover(int playerNum)
     {
-        yield return new WaitForSeconds(1);
-        players[playerNum].player.transform.rotation = Quaternion.Euler(0f, 0f, 0f);
+        lastHealthValue = players[playerNum].currHealth;
+        while (takingDmg)
+        {
+            yield return new WaitForSeconds(1.5f);
+            if (lastHealthValue == players[playerNum].currHealth)
+            {
+                takingDmg = false;
+            }
+            else
+            {
+                lastHealthValue = players[playerNum].currHealth;
+            }
+        }
+        players[playerNum].enemy.SetBool("Hit", false);
+        players[playerNum].enemy.SetBool("Recovering", true);
+        //yield return new WaitForSeconds(1);
+        timeRemaining = 1f;
+        while (timeRemaining >= 0)
+        {
+            timeRemaining -= Time.deltaTime;
+        }
+        players[playerNum].enemy.SetBool("Recovering", false);
+        //players[playerNum].enemy.SetTrigger("Recovered");
+        //players[playerNum].player.transform.rotation = Quaternion.Euler(0f, 0f, 0f);
     }
 
     void CheckRoundEnd(){

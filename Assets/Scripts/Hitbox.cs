@@ -10,21 +10,23 @@ public class Hitbox : MonoBehaviour
     private Animator enemy;
     private float dmgDealt;
     [SerializeField] private Animator hpAnimator;
+    [SerializeField] private string enemyTag;
+    [SerializeField] private int enemyIndex;
 
     void OnTriggerEnter(Collider other)
     {
-        enemy = other.gameObject.GetComponent<Animator>();
+        enemy = other.gameObject.GetComponentInChildren<Animator>();
         dmgDealt = dmg;
         //Debug.Log("collision detected");
-        if (other.tag == "Enemy")
+        if (other.tag == enemyTag)
         {
             hpAnimator.SetTrigger("hit");
-            if (enemy.GetCurrentAnimatorStateInfo(0).IsName("Blocking"))
+            if (enemy.GetBool("Block"))
             {
                 dmgDealt = dmgDealt / 10;
             }
             //Debug.Log("enemy detected");
-            enemyHealth.value = HealthManager.Instance.ChangeHealth(1, dmgDealt);
+            enemyHealth.value = HealthManager.Instance.ChangeHealth(enemyIndex, dmgDealt);
 
         }
     }
