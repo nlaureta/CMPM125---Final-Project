@@ -1,5 +1,5 @@
 fileFormatVersion: 2
-guid: b788916b7a671f549ba7a2a97e6ef884
+guid: 637e8d7d2feb7cc4fb6a5e688b318f4d
 TrueTypeFontImporter:
   externalObjects: {}
   serializedVersion: 4
@@ -9,7 +9,7 @@ TrueTypeFontImporter:
   characterPadding: 1
   includeFontData: 1
   fontNames:
-  - Greek-Freak
+  - Xtra
   fallbackFontReferences: []
   customCharacters: 
   fontRenderingMode: 0

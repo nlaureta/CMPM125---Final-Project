@@ -10607,7 +10607,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 164, y: 439.1}
+  m_AnchoredPosition: {x: 164, y: 493.8}
   m_SizeDelta: {x: 1244.5, y: 50}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1436638550
@@ -10632,8 +10632,8 @@ MonoBehaviour:
       m_Calls: []
   m_text: Mythos Fighters
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: 3fd1932a070449b41ab897ccd8ef8cd7, type: 2}
-  m_sharedMaterial: {fileID: 4515305577862020923, guid: 3fd1932a070449b41ab897ccd8ef8cd7, type: 2}
+  m_fontAsset: {fileID: 11400000, guid: af9c09a1babd03048b48ad940e067d75, type: 2}
+  m_sharedMaterial: {fileID: 6432409709152898409, guid: af9c09a1babd03048b48ad940e067d75, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
@@ -10657,8 +10657,8 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 91.7
-  m_fontSizeBase: 91.7
+  m_fontSize: 102.94
+  m_fontSizeBase: 102.94
   m_fontWeight: 400
   m_enableAutoSizing: 0
   m_fontSizeMin: 18
@@ -10774,7 +10774,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: PLAY
+  m_text: plaY
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 1334ae74958c40d4f8804b89f2ecfc8a, type: 2}
   m_sharedMaterial: {fileID: -5803720464131836208, guid: 1334ae74958c40d4f8804b89f2ecfc8a, type: 2}
