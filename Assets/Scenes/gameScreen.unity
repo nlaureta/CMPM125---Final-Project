@@ -8612,7 +8612,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   moveSpeed: 5
-  playerIndex: 0
+  playerIndex: 1
 --- !u!114 &1255369463
 MonoBehaviour:
   m_ObjectHideFlags: 0
