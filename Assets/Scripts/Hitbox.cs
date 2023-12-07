@@ -7,6 +7,7 @@ public class Hitbox : MonoBehaviour
 {
     [SerializeField] private Slider enemyHealth;
     [SerializeField] private float dmg = -10f;
+    [SerializeField] private float recovery = 1f;
     private Animator enemy;
     private float dmgDealt;
     [SerializeField] private Animator hpAnimator;
@@ -18,7 +19,7 @@ public class Hitbox : MonoBehaviour
         enemy = other.gameObject.GetComponentInChildren<Animator>();
         dmgDealt = dmg;
         //Debug.Log("collision detected");
-        if (other.tag == enemyTag)
+        if (other.tag == enemyTag && !enemy.GetBool("Recovering"))
         {
             hpAnimator.SetTrigger("hit");
             if (enemy.GetBool("Block"))
@@ -26,7 +27,7 @@ public class Hitbox : MonoBehaviour
                 dmgDealt = dmgDealt / 10;
             }
             //Debug.Log("enemy detected");
-            enemyHealth.value = HealthManager.Instance.ChangeHealth(enemyIndex, dmgDealt);
+            enemyHealth.value = HealthManager.Instance.ChangeHealth(enemyIndex, dmgDealt, recovery);
 
         }
     }

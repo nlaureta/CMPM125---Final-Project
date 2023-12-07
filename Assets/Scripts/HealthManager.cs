@@ -9,8 +9,9 @@ public class HealthManager : MonoBehaviour
     public float player2Health;
 
     private float lastHealthValue;
-    private bool takingDmg = false;
+    //private bool takingDmg = false;
     private float timeRemaining;
+    private Coroutine dmg;
 
     public bool roundEnded = false;
 
@@ -21,6 +22,7 @@ public class HealthManager : MonoBehaviour
         public float maxHealth;
         public float currHealth;
         public Animator enemy;
+        public bool takingDmg = false;
     }
     public List<Player> players;
 
@@ -50,38 +52,51 @@ public class HealthManager : MonoBehaviour
     
     }
 
-    public float ChangeHealth(int playerNum, float amount)
+    public float ChangeHealth(int playerNum, float amount, float recoveryTime)
     {
         players[playerNum].currHealth += amount;
-        takingDmg = true;
+        players[playerNum].takingDmg = true;
         players[playerNum].enemy.SetBool("Hit", true);
         //players[playerNum].player.transform.rotation = Quaternion.Euler(0f, 0f, -45f);
-        StartCoroutine(Recover(playerNum));
+        StopCoroutine(Recover(playerNum, recoveryTime));
+        dmg = StartCoroutine(Recover(playerNum, recoveryTime));
         return (players[playerNum].currHealth / players[playerNum].maxHealth);
     }
 
-    public IEnumerator Recover(int playerNum)
+    public IEnumerator Recover(int playerNum, float recoveryTime)
     {
         lastHealthValue = players[playerNum].currHealth;
-        while (takingDmg)
+        while (players[playerNum].takingDmg)
         {
-            yield return new WaitForSeconds(1.5f);
-            if (lastHealthValue == players[playerNum].currHealth)
+            players[playerNum].takingDmg = false;
+            yield return new WaitForSeconds(recoveryTime);
+            if (lastHealthValue != players[playerNum].currHealth)
             {
-                takingDmg = false;
-            }
-            else
-            {
-                lastHealthValue = players[playerNum].currHealth;
-            }
+                //lastHealthValue = players[playerNum].currHealth;
+                //yield return new WaitForSeconds(1);
+                if (players[playerNum].takingDmg)
+                {
+                    yield break;
+                }
+                else
+                {
+                    lastHealthValue = players[playerNum].currHealth;
+                    players[playerNum].takingDmg = true;
+                }
+            } //else
+            //{
+            //    players[playerNum].takingDmg = false;
+            //}
         }
+        Debug.Log("huh");
         players[playerNum].enemy.SetBool("Hit", false);
         players[playerNum].enemy.SetBool("Recovering", true);
         //yield return new WaitForSeconds(1);
-        timeRemaining = 1f;
+        timeRemaining = .5f;
         while (timeRemaining >= 0)
         {
             timeRemaining -= Time.deltaTime;
+            yield return null;
         }
         players[playerNum].enemy.SetBool("Recovering", false);
         //players[playerNum].enemy.SetTrigger("Recovered");
