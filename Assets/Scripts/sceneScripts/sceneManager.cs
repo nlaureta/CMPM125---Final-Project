@@ -24,7 +24,8 @@ public class sceneManager : MonoBehaviour
     public enum Scene
     {
         mainMenu,
-        gameScreen
+        gameScreen,
+        creditsScene
     }
 
     public void LoadMainMenu()
@@ -39,6 +40,11 @@ public class sceneManager : MonoBehaviour
         cameraAnim = GameObject.Find("Main Camera").GetComponent<Animator>();
         mainUI.SetActive(false);
         StartCoroutine(PlayAnim());
+    }
+
+    public void LoadCredits()
+    {
+        SceneManager.LoadScene(Scene.creditsScene.ToString());
     }
 
     IEnumerator PlayAnim()
