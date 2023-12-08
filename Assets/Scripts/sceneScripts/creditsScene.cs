@@ -13,6 +13,8 @@ public class creditsScene : MonoBehaviour
     [SerializeField] private GameObject fontsCredits;
     [SerializeField] private GameObject soundsCredits;
     [SerializeField] private GameObject assetsCredits;
+    [SerializeField] AudioSource source;
+    [SerializeField] AudioClip clip;
 
     // Start is called before the first frame update
     void Start()
@@ -41,6 +43,7 @@ public class creditsScene : MonoBehaviour
         fontsCredits.SetActive(false);
         soundsCredits.SetActive(false);
         assetsCredits.SetActive(false);
+        source.PlayOneShot(clip);
     }
 
     private void loadFontsCredits()
@@ -49,6 +52,7 @@ public class creditsScene : MonoBehaviour
         fontsCredits.SetActive(true);
         soundsCredits.SetActive(false);
         assetsCredits.SetActive(false);
+        source.PlayOneShot(clip);
     }
 
     private void loadSoundsCredits()
@@ -57,6 +61,7 @@ public class creditsScene : MonoBehaviour
         fontsCredits.SetActive(false);
         soundsCredits.SetActive(true);
         assetsCredits.SetActive(false);
+        source.PlayOneShot(clip);
     }
 
     private void loadAssetsCredits()
@@ -65,5 +70,6 @@ public class creditsScene : MonoBehaviour
         fontsCredits.SetActive(false);
         soundsCredits.SetActive(false);
         assetsCredits.SetActive(true);
+        source.PlayOneShot(clip);
     }
 }

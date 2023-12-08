@@ -6,6 +6,8 @@ using UnityEngine.UI;
 public class creditsButton : MonoBehaviour
 {
     [SerializeField] Button _credits;
+    [SerializeField] AudioSource source;
+    [SerializeField] AudioClip clip;
     // Start is called before the first frame update
     void Start()
     {
@@ -20,6 +22,7 @@ public class creditsButton : MonoBehaviour
 
     private void loadCredits()
     {
+        source.PlayOneShot(clip);
         Time.timeScale = 1f;
         sceneManager.Instance.LoadCredits();
     }
