@@ -9,6 +9,7 @@ public class HealthManager : MonoBehaviour
     public float player2Health;
 
     private float lastHealthValue;
+    private Quaternion knockedBackRotation;
     //private bool takingDmg = false;
     private float timeRemaining;
     private Coroutine dmg;
@@ -19,10 +20,12 @@ public class HealthManager : MonoBehaviour
     public class Player 
     {
         public GameObject player;
+        public Rigidbody playerBody;
         public float maxHealth;
         public float currHealth;
         public Animator enemy;
         public bool takingDmg = false;
+        public float yRot;
     }
     public List<Player> players;
 
@@ -52,12 +55,21 @@ public class HealthManager : MonoBehaviour
     
     }
 
-    public float ChangeHealth(int playerNum, float amount, float recoveryTime)
+    public float ChangeHealth(int playerNum, float amount, float recoveryTime, Vector3 knockback)
     {
         players[playerNum].currHealth += amount;
         players[playerNum].takingDmg = true;
         players[playerNum].enemy.SetBool("Hit", true);
         players[playerNum].enemy.SetBool("Knocked", true);
+        if (players[playerNum].player.transform.rotation.y >= 0)
+        {
+            knockback = new Vector3(-knockback.x, knockback.y, knockback.z);
+        }
+        Debug.Log(players[playerNum].player.transform.rotation.y);
+        players[playerNum].playerBody.AddForce(knockback, ForceMode.Impulse);
+        
+        //players[playerNum].player.transform.rotation = new Quaternion(0f, players[playerNum].player.transform.rotation.y, -60f, 0f);
+        //Debug.Log(players[playerNum].player.transform.rotation);
         players[playerNum].player.transform.rotation *= Quaternion.Euler(0f, 0f, 45f);
         StopCoroutine(Recover(playerNum, recoveryTime));
         dmg = StartCoroutine(Recover(playerNum, recoveryTime));

@@ -13,13 +13,13 @@ public class Hitbox : MonoBehaviour
     [SerializeField] private Animator hpAnimator;
     [SerializeField] private string enemyTag;
     [SerializeField] private int enemyIndex;
+    [SerializeField] private Vector3 knockback;
 
     void OnTriggerEnter(Collider other)
     {
         enemy = other.gameObject.GetComponentInChildren<Animator>();
         dmgDealt = dmg;
         //Debug.Log("collision detected");
-        Debug.Log("Approaching If Statement");
         if (other.tag == enemyTag && !enemy.GetBool("Recovering"))
         {
             hpAnimator.SetTrigger("hit");
@@ -28,7 +28,8 @@ public class Hitbox : MonoBehaviour
                 dmgDealt = dmgDealt / 10;
             }
             //Debug.Log("enemy detected");
-            enemyHealth.value = HealthManager.Instance.ChangeHealth(enemyIndex, dmgDealt, recovery);
+            //knockback = new Vector3(75f, 10f, 0f);
+            enemyHealth.value = HealthManager.Instance.ChangeHealth(enemyIndex, dmgDealt, recovery, knockback);
 
         }
   
