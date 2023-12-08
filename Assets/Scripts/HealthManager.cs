@@ -66,11 +66,14 @@ public class HealthManager : MonoBehaviour
             knockback = new Vector3(-knockback.x, knockback.y, knockback.z);
         }
         Debug.Log(players[playerNum].player.transform.rotation.y);
-        players[playerNum].playerBody.AddForce(knockback, ForceMode.Impulse);
-        
-        //players[playerNum].player.transform.rotation = new Quaternion(0f, players[playerNum].player.transform.rotation.y, -60f, 0f);
-        //Debug.Log(players[playerNum].player.transform.rotation);
-        players[playerNum].player.transform.rotation *= Quaternion.Euler(0f, 0f, 45f);
+        if (!players[playerNum].enemy.GetBool("Block"))
+        {
+            players[playerNum].playerBody.AddForce(knockback, ForceMode.Impulse);
+
+            //players[playerNum].player.transform.rotation = new Quaternion(0f, players[playerNum].player.transform.rotation.y, -60f, 0f);
+            //Debug.Log(players[playerNum].player.transform.rotation);
+            players[playerNum].player.transform.rotation *= Quaternion.Euler(0f, 0f, 45f);
+        }
         StopCoroutine(Recover(playerNum, recoveryTime));
         dmg = StartCoroutine(Recover(playerNum, recoveryTime));
         return (players[playerNum].currHealth / players[playerNum].maxHealth);
