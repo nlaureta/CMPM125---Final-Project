@@ -6,6 +6,8 @@ using UnityEngine.UI;
 public class playButtonScript : MonoBehaviour
 {
     [SerializeField] Button _playButton;
+    [SerializeField] AudioSource source;
+    [SerializeField] private AudioClip clip;
     // Start is called before the first frame update
     void Start()
     {
@@ -22,5 +24,7 @@ public class playButtonScript : MonoBehaviour
     {
         Time.timeScale = 1f;
         sceneManager.Instance.LoadGameScreen();
+        source.PlayOneShot(clip);
+
     }
 }
