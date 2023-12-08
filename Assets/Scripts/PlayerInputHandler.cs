@@ -4,7 +4,12 @@ using System.Linq;
 using UnityEngine;
 using UnityEngine.InputSystem;
 using static UnityEngine.InputSystem.InputAction;
-
+/***************************************
+ * Used this tutorial to learn how to implement Gammepad Controls
+ * https://youtu.be/2YhGK-PXz7g
+ * 
+ * 
+ *****************************************/
 public class PlayerInputHandler : MonoBehaviour
 {
     private PlayerInput playerInput;
